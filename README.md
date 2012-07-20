@@ -5,11 +5,15 @@ This is an interface component that allows you to select a photo from your album
 
 ![This is what it looks like.](http://labs.carsonshold.com/fb-photo-selector/demo.png)
 
+This is based on the Friend Selector plugin created by [These Days](http://www.thesedays.com/). Their plugin can be found on [GitHub](https://github.com/thesedays/Facebook-friend-selector).
+
 ## Viewing the example
 
-You can view the example at [CarsonShold.com](http://labs.carsonshold.com/fb-photo-selector/), or you can check out this repository and run it yourself. You'll need to put the files on a web server or virtual host - Facebook apps won't run off the local file system.
+You can view the example at [labs.carsonshold.com/fb-photo-selector](http://labs.carsonshold.com/fb-photo-selector/), or you can check out this repository and run it yourself.
 
-Just edit `example.js` and set your Facebook `appId`.
+You'll need to put the files on a web server or virtual host - Facebook apps won't run off the local file system.
+
+Just edit `example.js` and set your Facebook `appId`, then set the 'Website' field in your app settings accordingly.
 
 ## Using the plugin
 
@@ -30,7 +34,7 @@ Just edit `example.js` and set your Facebook `appId`.
 
 ### The fun stuff (using the plugin)
 
-1 - Make sure your user has authenticated your Facebook app. `your_photos` is required. `friends_photos` is required if you would like to browse a friend's photos.
+1 - Make sure your user has authenticated your Facebook app. `user_photos` is required. `friends_photos` is required if you would like to browse a friend's photos. These are set in `example.js`.
 
 2 - Initialise the plugin. Here you can set options like toggling debug messages, your preferred classnames, etc.
 
