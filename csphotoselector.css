@@ -119,6 +119,7 @@
 #CSPhotoSelector .CSPhotoSelector_dialog .CSAlbum_container .CSPhotoSelector_album .CSPhotoSelector_photoAvatar {
 	display: block;
 	max-width: 100%;
+	border: none;
 }
 #CSPhotoSelector .CSPhotoSelector_dialog .CSPhoto_container .CSPhotoSelector_photo {
 	position: relative;
@@ -151,6 +152,7 @@
 	width: 120%;
 	left: -10%;
 	margin: 0 auto;
+	border: none;
 }
 #CSPhotoSelector .CSPhotoSelector_dialog .CSPhotoSelector_photosContainer .CSPhotoSelector_album .CSPhotoSelector_photoName {
 	display: block;
