@@ -63,4 +63,6 @@ Just edit `example.js` and set your Facebook `appId`, then set the 'Website' fie
 		fbphotoSelect(id);
 	});
 
+### License
 
+[MIT Licensed](http://en.wikipedia.org/wiki/MIT_License)
