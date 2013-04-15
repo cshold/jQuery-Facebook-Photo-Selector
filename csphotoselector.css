@@ -18,6 +18,13 @@
 	font-size: 11px;
 	background: rgba(0,0,0,.9);
 }
+#CSPhotoSelector,
+#CSPhotoSelector * {
+	box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	line-height: normal;
+}
 #CSPhotoSelector a,
 #CSPhotoSelector a:active,
 #CSPhotoSelector a:hover,
