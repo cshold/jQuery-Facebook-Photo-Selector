@@ -82,7 +82,13 @@ var CSPhotoSelector = (function(module, $) {
 		}
 		input = Array.prototype.slice.call(input);
 		input = input.sort(sortPhotos);
-		albums = input;
+
+		albums = [];
+		for (var i=0; i<input.length; i++){
+			if (input[i].count){
+				albums[albums.length] = input[i];
+			}
+		}
 	};
 	
 	getAlbums = function() {
