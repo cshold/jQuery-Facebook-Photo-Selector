@@ -8,7 +8,7 @@ var CSPhotoSelector = (function(module, $) {
 	var init, setAlbums, getAlbums, getAlbumById, getPhotoById, setPhotos, newInstance,
 
 	// Private variables
-	settings, albums, prev,
+	settings, albums, prev, photos,
 	$albums, $photos, $container, $albumsContainer, $photosContainer, $selectedCount, $selectedCountMax, $pageNumber, $pageNumberTotal, $pagePrev, $pageNext, $buttonClose, $buttonOK, $buttonCancel,
 
 	// Private functions
@@ -594,7 +594,9 @@ var CSPhotoSelector = (function(module, $) {
 	buildPhotoSelector = function(callback, albumId) {
 		var buildSecondMarkup, buildPhotoMarkup;
 		log("buildPhotoSelector");
-		
+
+		photos = [];
+
 		FB.api('/'+ albumId +'/photos?fields=id,picture,source,height,width&limit=500', function(response) {
 			if (response.data) {
 				setPhotos(response.data);
