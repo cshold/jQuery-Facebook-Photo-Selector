@@ -32,6 +32,9 @@
 	text-decoration: none;
 	color: #3B5998;
 }
+#CSPhotoSelector img {
+	max-width: none;
+}
 #CSPhotoSelector p,
 #CSPhotoSelector ul,
 #CSPhotoSelector li {
