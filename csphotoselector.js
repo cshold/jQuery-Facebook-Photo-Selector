@@ -12,7 +12,7 @@ var CSPhotoSelector = (function(module, $) {
 	$albums, $photos, $container, $albumsContainer, $photosContainer, $selectedCount, $selectedCountMax, $pageNumber, $pageNumberTotal, $pagePrev, $pageNext, $buttonClose, $buttonOK, $buttonCancel,
 
 	// Private functions
-	$getAlbumById, $getPhotoById, buildAlbumSelector, buildPhotoSelector, sortPhotos, log;
+	$getAlbumById, $getPhotoById, buildAlbumSelector, buildPhotoSelector, sortPhotos, log, htmlEntities;
 
 	/////////////////////////////////////////
 	// PUBLIC FUNCTIONS FOR GLOBAL PLUGIN
@@ -569,16 +569,10 @@ var CSPhotoSelector = (function(module, $) {
 		buildAlbumMarkup = function(album, accessToken) {
 			return '<a href="#" class="CSPhotoSelector_album" data-id="' + album.id + '">' +
 					'<div class="CSPhotoSelector_albumWrap"><div>' +
-					'<img src="https://graph.facebook.com/'+ album.id +'/picture?type=album&access_token='+ accessToken +'" alt="' + album.name + '" class="CSPhotoSelector_photoAvatar" />' +
+					'<img src="https://graph.facebook.com/'+ album.id +'/picture?type=album&access_token='+ accessToken +'" alt="' + htmlEntities(album.name) + '" class="CSPhotoSelector_photoAvatar" />' +
 					'</div></div>' +
-					'<div class="CSPhotoSelector_photoName">' + album.name + '</div>' +
+					'<div class="CSPhotoSelector_photoName">' + htmlEntities(album.name) + '</div>' +
 					'</a>';
-			// return '<a href="#" class="CSPhotoSelector_photo CSPhotoSelector_clearfix" data-id="' + album.id + '">' +
-			// 		'<img src="https://graph.facebook.com/'+ album.id +'/picture?type=album&access_token='+ accessToken +'" width="75" height="75" alt="' + album.name + '" class="CSPhotoSelector_photoAvatar" />' +
-			// 		'<div class="CSPhotoSelector_photoName">' + 
-			// 			'<span class="CSPhotoSelector_albumName">' + album.name + '</span>' +
-			// 		'</div>' +
-			// 		'</a>';
 		};
 	};
 	
@@ -643,6 +637,12 @@ var CSPhotoSelector = (function(module, $) {
 		if (settings && settings.debug && window.console) {
 			console.log(Array.prototype.slice.call(arguments));
 		}
+	};
+
+	htmlEntities = function(str) {
+		if (!str) return '';
+		// replace HTML tags in a string with encoded entities
+		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 	};
 
 	module = {
