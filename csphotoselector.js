@@ -591,7 +591,7 @@ var CSPhotoSelector = (function(module, $) {
 
 		photos = [];
 
-		FB.api('/'+ albumId +'/photos?fields=id,picture,source,height,width&limit=500', function(response) {
+		FB.api('/'+ albumId +'/photos?fields=id,picture,source,height,width,images&limit=500', function(response) {
 			if (response.data) {
 				setPhotos(response.data);
 				// Build the markup
