@@ -1,6 +1,8 @@
 jQuery Facebook Photo Selector
 =========================================
 
+[View Demo](http://labs.carsonshold.com/fb-photo-selector/)
+
 This is an interface component that allows you to select a photo from your albums as if you were inside of Facebook. It mimics the 'Change your profile picture' dialogue, but allows you to customize it as you like.
 
 ![This is what it looks like.](http://labs.carsonshold.com/fb-photo-selector/demo.png)
@@ -9,7 +11,7 @@ This is based on the Friend Selector plugin created by [These Days](http://www.t
 
 ## Viewing the example
 
-You can view the example at [labs.carsonshold.com/fb-photo-selector](http://labs.carsonshold.com/fb-photo-selector/), or you can check out this repository and run it yourself.
+You can view the example at [labs.carsonshold.com/fb-photo-selector](http://labs.carsonshold.com/fb-photo-selector/) or you check out this repo and run it yourself.
 
 You'll need to put the files on a web server or virtual host - Facebook apps won't run off the local file system.
 
