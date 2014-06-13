@@ -1,138 +1,148 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>Carson Shold's Facebook Photo Selector</title>
-		<style>
-			body { font-family: sans-serif; color: #333; background: #fff; }
-			.carsonshold { position: relative; width: 100%; display: block; border-bottom: 1px solid #ccc; }
-			.carsonshold img { padding: 20px; display: block; border: none; }
-			#thesedays { padding: 10px; margin: 40px 0; background: #f6f6f6; border: 1px solid #ccc; }
-			ul li { padding-bottom: 5px; }
-			#results { padding: 10px; background: #f6f6f6; border: 1px solid #ccc; font-family: monospace; }
-		</style>
-		<link rel="stylesheet" href="csphotoselector.css" />
-	</head>
-	<body>
-		<div id="fb-root"></div>
+  <head>
+    <meta charset="utf-8">
+    <title>Carson Shold's Facebook Photo Selector</title>
+    <meta name="description" content="Social share buttons with shared count. Built with Sass and jQuery">
+    <meta name="author" content="Carson Shold">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="facebook photo selector plugin">
+    <meta name="og:description" content="jQuery Facebook photo selector plugin">
+    <meta name="og:url" content="http://labs.carsonshold.com/fb-photo-selector/">
+    <meta name="og:image" content="http://labs.carsonshold.com/fb-photo-selector/demo.png">
+    <meta name="og:type" content="website">
+    <meta name="og:site_name" content="Carson Shold's Facebook Photo Selector">
+    <link rel="stylesheet" href="csphotoselector.css">
+    <link rel="stylesheet" href="http://labs.carsonshold.com/demos.css">
+  </head>
+  <body>
+    <div id="fb-root"></div>
 
-		<a href="http://carsonshold.com" class="carsonshold"><img src="http://carsonshold.com/wp-content/themes/carsonshold/img/carson-shold.png" alt="Carson Shold" /></a>
-		<h1>jQuery Facebook Photo Selector</h1>
-		<p>This is an interface component that allows you to select a photo from your albums as if you were inside of Facebook. It mimics the <em>Change your profile picture</em> dialogue, but allows you to customize it as you like.</p>
-		<p>While this is a good start, improvement and customizations can be made. Feel free to take this to the next level for your projects.</p>
+    <a href="http://carsonshold.com" class="carsonshold"><img src="http://carsonshold.com/wp-content/themes/carsonshold/img/carson-shold.png" alt="Carson Shold" /></a>
 
-		<h3>Example</h3>
-		<ul>
-			<li>Status: <span id="login-status">Not logged in</span> | <a href="#" id="btnLogin">Login</a> | <a href="#" id="btnLogout">Log out</a></li>
-			<li><a href="#" class="photoSelect">Select from your photos</a> (You'll need to log in first)</li>
-			<li><a href="#" class="photoSelect" data-id="100002194886179">Select a friend's photo</a> (See below for instructions)</li>
-		</ul>
-		<div id="results">
-			<p>ACTIVITY LOG</p>
-		</div>
-		
-		
-		<p><strong>How to implement</strong>: <a href="https://github.com/cshold/jQuery-Facebook-Photo-Selector">jQuery Facebook Photo Selector on GitHub</a></p>
-		
-		
-		<h3>Features</h3>
-		<ul>
-			<li>Browse through albums to find photos</li>
-			<li>Defaults to searching the current user's photos,<br>but can search through friends. See <strong>Search your friend's photos</strong> below.</li>
-			<li>API calls only made when an album is selected.</li>
-			<li>Max 500 photos per album.</li>
-			<li>Facebook-like styling</li>
-		</ul>
-		
-		<h4>Search your friend's photos</h4>
-		<p>Simply pass a friend's ID to <code>fbphotoSelect()</code> via the <code>data-id</code> attribute on the link. If left blank, the current user's photos are selected.</p>
-		<p>Some users have their photos hidden no matter what permissions you ask for, so you may be faced with a brick wall.</p>
-		
-		
-		<div id="thesedays">
-			<h4>This is based on the Friend Selector plugin created by <a href="http://www.thesedays.com/">These Days</a>. Their plugin can be found on <a href="https://github.com/thesedays/Facebook-friend-selector">GitHub</a>.</h4>
-			<p>The friend selector is a more complete plugin right now. While this photo selection plugin is based on theirs, it has yet to tap into the following areas:</p>
-			<ul>
-				<li>Multiple photo selections</li>
-				<li>Photo/album exclusion</li>
-				<li>Searching</li>
-				<li>Pagination for photo page</li>
-			</ul>
-		</div>
+    <h1>jQuery Facebook Photo Selector</h1>
+    <p>This is an interface component that allows you to select a photo from your albums as if you were inside of Facebook. It mimics the <em>Change your profile picture</em> dialogue, but allows you to customize it as you like.</p>
+    <p>While this is a good start, improvement and customizations can be made. Feel free to take this to the next level for your projects.</p>
 
-		<!-- Markup for Carson Shold's Photo Selector -->
-		<div id="CSPhotoSelector">
-			<div class="CSPhotoSelector_dialog">
-				<a href="#" id="CSPhotoSelector_buttonClose">x</a>
-				<div class="CSPhotoSelector_form">
-					<div class="CSPhotoSelector_header">
-						<p>Choose from Photos</p>
-					</div>
+    <h2>How to implement</h2>
+    <a href="https://github.com/cshold/jQuery-Facebook-Photo-Selector" title="View on GitHub" class="github-button">jQuery Facebook Photo Selector on GitHub</a>
 
-					<div class="CSPhotoSelector_content CSAlbumSelector_wrapper">
-						<p>Browse your albums until you find a picture you want to use</p>
-						<div class="CSPhotoSelector_searchContainer CSPhotoSelector_clearfix">
-							<div class="CSPhotoSelector_selectedCountContainer">Select an album</div>
-						</div>
-						<div class="CSPhotoSelector_photosContainer CSAlbum_container"></div>
-					</div>
+    <h3>Example</h3>
+    <ul>
+      <li>Status: <span id="login-status">Not logged in</span> | <a href="#" id="btnLogin">Login</a> | <a href="#" id="btnLogout">Log out</a></li>
+      <li><a href="#" class="photoSelect">Select from your photos</a> (You'll need to log in first)</li>
+      <li><a href="#" class="photoSelect" data-id="100002194886179">Select a friend's photo</a> (See below for instructions)</li>
+    </ul>
+    <div id="results">
+      <p>ACTIVITY LOG</p>
+    </div>
 
-					<div class="CSPhotoSelector_content CSPhotoSelector_wrapper">
-						<p>Select a new photo</p>
-						<div class="CSPhotoSelector_searchContainer CSPhotoSelector_clearfix">
-							<div class="CSPhotoSelector_selectedCountContainer"><span class="CSPhotoSelector_selectedPhotoCount">0</span> / <span class="CSPhotoSelector_selectedPhotoCountMax">0</span> photos selected</div>
-							<a href="#" id="CSPhotoSelector_backToAlbums">Back to albums</a>
-						</div>
-						<div class="CSPhotoSelector_photosContainer CSPhoto_container"></div>
-					</div>
+    <h3>Features</h3>
+    <ul>
+      <li>Browse through albums to find photos</li>
+      <li>Defaults to searching the current user's photos,<br>but can search through friends. See <strong>Search your friend's photos</strong> below.</li>
+      <li>API calls only made when an album is selected.</li>
+      <li>Max 500 photos per album.</li>
+      <li>Facebook-like styling</li>
+    </ul>
 
-					<div id="CSPhotoSelector_loader"></div>
+    <h4>Search your friend's photos</h4>
+    <p>Simply pass a friend's ID to <code>fbphotoSelect()</code> via the <code>data-id</code> attribute on the link. If left blank, the current user's photos are selected.</p>
+    <p>Some users have their photos hidden no matter what permissions you ask for, so you may be faced with a brick wall.</p>
 
 
-					<div class="CSPhotoSelector_footer CSPhotoSelector_clearfix">
-						<a href="#" id="CSPhotoSelector_pagePrev" class="CSPhotoSelector_disabled">Previous</a>
-						<a href="#" id="CSPhotoSelector_pageNext">Next</a>
-						<div class="CSPhotoSelector_pageNumberContainer">
-							Page <span id="CSPhotoSelector_pageNumber">1</span> / <span id="CSPhotoSelector_pageNumberTotal">1</span>
-						</div>
-						<a href="#" id="CSPhotoSelector_buttonOK">OK</a>
-						<a href="#" id="CSPhotoSelector_buttonCancel">Cancel</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<p><small>Please respect your users and adhere to the <a href="http://developers.facebook.com/policy/" target="_blank">Facebook Platform Policies</a> when using this plugin.</small></p>
+    <div id="thesedays">
+      <h4>This is based on the Friend Selector plugin created by <a href="http://www.thesedays.com/">These Days</a>. Their plugin can be found on <a href="https://github.com/thesedays/Facebook-friend-selector">GitHub</a>.</h4>
+      <p>The friend selector is a more complete plugin right now. While this photo selection plugin is based on theirs, it has yet to tap into the following areas:</p>
+      <ul>
+        <li>Multiple photo selections</li>
+        <li>Photo/album exclusion</li>
+        <li>Searching</li>
+        <li>Pagination for photo page</li>
+      </ul>
+    </div>
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-		<script>
-		window.fbAsyncInit = function() {
-			FB.init({ appId: '203534596466008', cookie: true, status: true, xfbml: true, oauth: true });
-			
-			FB.getLoginStatus(function(response) {
-				if (response.authResponse) {
-					$("#login-status").html("Logged in");
-				} else {
-					$("#login-status").html("Not logged in");
-				}
-			});
-		};
-		(function(d){
-			var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-			if (d.getElementById(id)) {return;}
-			js = d.createElement('script'); js.id = id; js.async = true;
-			js.src = "//connect.facebook.net/en_US/all.js";
-			ref.parentNode.insertBefore(js, ref);
-		}(document));
-		</script>
-		<script src="csphotoselector.js"></script>
-		<script src="example.js"></script>
+    <!-- Markup for Carson Shold's Photo Selector -->
+    <div id="CSPhotoSelector">
+      <div class="CSPhotoSelector_dialog">
+        <a href="#" id="CSPhotoSelector_buttonClose">x</a>
+        <div class="CSPhotoSelector_form">
+          <div class="CSPhotoSelector_header">
+            <p>Choose from Photos</p>
+          </div>
 
-		<script>
-			// These analytics are here for the page at http://labs.carsonshold.com/fb-photo-selector/
-			var _gaq=[["_setAccount","UA-8697235-1"],["_trackPageview"]];
-			(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s);}(document,"script"));
-		</script>
-	</body>
+          <div class="CSPhotoSelector_content CSAlbumSelector_wrapper">
+            <p>Browse your albums until you find a picture you want to use</p>
+            <div class="CSPhotoSelector_searchContainer CSPhotoSelector_clearfix">
+              <div class="CSPhotoSelector_selectedCountContainer">Select an album</div>
+            </div>
+            <div class="CSPhotoSelector_photosContainer CSAlbum_container"></div>
+          </div>
+
+          <div class="CSPhotoSelector_content CSPhotoSelector_wrapper">
+            <p>Select a new photo</p>
+            <div class="CSPhotoSelector_searchContainer CSPhotoSelector_clearfix">
+              <div class="CSPhotoSelector_selectedCountContainer"><span class="CSPhotoSelector_selectedPhotoCount">0</span> / <span class="CSPhotoSelector_selectedPhotoCountMax">0</span> photos selected</div>
+              <a href="#" id="CSPhotoSelector_backToAlbums">Back to albums</a>
+            </div>
+            <div class="CSPhotoSelector_photosContainer CSPhoto_container"></div>
+          </div>
+
+          <div id="CSPhotoSelector_loader"></div>
+
+
+          <div class="CSPhotoSelector_footer CSPhotoSelector_clearfix">
+            <a href="#" id="CSPhotoSelector_pagePrev" class="CSPhotoSelector_disabled">Previous</a>
+            <a href="#" id="CSPhotoSelector_pageNext">Next</a>
+            <div class="CSPhotoSelector_pageNumberContainer">
+              Page <span id="CSPhotoSelector_pageNumber">1</span> / <span id="CSPhotoSelector_pageNumberTotal">1</span>
+            </div>
+            <a href="#" id="CSPhotoSelector_buttonOK">OK</a>
+            <a href="#" id="CSPhotoSelector_buttonCancel">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p><small>Please respect your users and adhere to the <a href="http://developers.facebook.com/policy/" target="_blank">Facebook Platform Policies</a> when using this plugin.</small></p>
+
+    <footer class="demo-footer">
+      Author: Carson Shold | <a href="https://twitter.com/cshold" title="Carson Shold on Twitter">@cshold</a>
+    </footer>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>
+    window.fbAsyncInit = function() {
+      FB.init({ appId: '203534596466008', cookie: true, status: true, xfbml: true, oauth: true });
+
+      FB.getLoginStatus(function(response) {
+        if (response.authResponse) {
+          $("#login-status").html("Logged in");
+        } else {
+          $("#login-status").html("Not logged in");
+        }
+      });
+    };
+    (function(d){
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
+    </script>
+    <script src="csphotoselector.js"></script>
+    <script src="example.js"></script>
+
+    <script>
+      // These analytics are here for the page at http://labs.carsonshold.com/fb-photo-selector/
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-8697235-1']);
+      _gaq.push(['_setDomainName', 'carsonshold.com']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;g.src="//www.google-analytics.com/ga.js";s.parentNode.insertBefore(g,s);}(document,"script"));
+    </script>
+  </body>
 </html>
 
