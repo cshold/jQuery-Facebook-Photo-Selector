@@ -75,7 +75,7 @@ var CSPhotoSelector = (function(module, $) {
 	/**
 	 * If your website has already loaded the user's Facebook photos, pass them in here to avoid another API call.
 	 */
-	setAlbums = function(input) {
+	setAlbums = function(input, id) {
 		var i, len;
 		if (!input || input.length === 0) {
 			return;
@@ -84,17 +84,24 @@ var CSPhotoSelector = (function(module, $) {
 		input = input.sort(sortPhotos);
 
 		albums = [];
+		if (id) {
+			albums.push({
+				id: id,
+				name: 'Photos of ' + (id == 'me' ? 'you' : 'your friend')
+			})
+		}
+
 		for (var i=0; i<input.length; i++){
 			if (input[i].count){
 				albums[albums.length] = input[i];
 			}
 		}
 	};
-	
+
 	getAlbums = function() {
 		return albums;
 	};
-	
+
 	setPhotos = function(input) {
 		var i, len;
 		if (!input || input.length === 0) {
@@ -544,7 +551,7 @@ var CSPhotoSelector = (function(module, $) {
 				// Load Facebook photos
 				FB.api('/'+ id +'/albums', function(response) {
 					if (response.data.length) {
-						setAlbums(response.data);
+						setAlbums(response.data, id);
 						// Build the markup
 						buildMarkup(accessToken);
 						// Call the callback
@@ -575,13 +582,13 @@ var CSPhotoSelector = (function(module, $) {
 		buildAlbumMarkup = function(album, accessToken) {
 			return '<a href="#" class="CSPhotoSelector_album" data-id="' + album.id + '">' +
 					'<div class="CSPhotoSelector_albumWrap"><div>' +
-					'<img src="https://graph.facebook.com/'+ album.id +'/picture?type=album&access_token='+ accessToken +'" alt="' + htmlEntities(album.name) + '" class="CSPhotoSelector_photoAvatar" />' +
+					'<img src="https://graph.facebook.com/'+ album.id +'/picture?type='+ (album.id == 'me' ? 'large' : 'album') +'&access_token='+ accessToken +'" alt="' + htmlEntities(album.name) + '" class="CSPhotoSelector_photoAvatar" />' +
 					'</div></div>' +
 					'<div class="CSPhotoSelector_photoName">' + htmlEntities(album.name) + '</div>' +
 					'</a>';
 		};
 	};
-	
+
 	/**
 	 * Load the Facebook photos and build the markup
 	 */
