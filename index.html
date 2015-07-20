@@ -119,7 +119,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script>
     window.fbAsyncInit = function() {
-      FB.init({ appId: '203534596466008', cookie: true, status: true, xfbml: true, oauth: true });
+      FB.init({ appId: '203534596466008', cookie: true, status: true, xfbml: true, oauth: true, version: 'v2.4' });
 
       FB.getLoginStatus(function(response) {
         if (response.authResponse) {
@@ -129,13 +129,13 @@
         }
       });
     };
-    (function(d){
-      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) {return;}
-      js = d.createElement('script'); js.id = id; js.async = true;
-      js.src = "//connect.facebook.net/en_US/all.js";
-      ref.parentNode.insertBefore(js, ref);
-    }(document));
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
     </script>
     <script src="csphotoselector.js"></script>
     <script src="example.js"></script>

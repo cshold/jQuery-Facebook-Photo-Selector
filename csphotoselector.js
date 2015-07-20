@@ -85,9 +85,10 @@ var CSPhotoSelector = (function(module, $) {
 
 		albums = [];
 		for (var i=0; i<input.length; i++){
-			if (input[i].count){
+			// The count info is not available anymore
+			//if (input[i].count){
 				albums[albums.length] = input[i];
-			}
+			//}
 		}
 	};
 	

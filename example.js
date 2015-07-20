@@ -80,7 +80,7 @@ $(document).ready(function () {
 			} else {
 				$("#login-status").html("Not logged in");
 			}
-		}, {scope:'user_photos, friends_photos'});
+		}, {scope:'user_photos'});
 	});
 	
 	$("#btnLogout").click(function (e) {
