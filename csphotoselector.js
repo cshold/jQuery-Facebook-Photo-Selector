@@ -85,16 +85,14 @@ var CSPhotoSelector = (function(module, $) {
 
 		albums = [];
 		for (var i=0; i<input.length; i++){
-			if (input[i].count){
-				albums[albums.length] = input[i];
-			}
+			albums[albums.length] = input[i];
 		}
 	};
-	
+
 	getAlbums = function() {
 		return albums;
 	};
-	
+
 	setPhotos = function(input) {
 		var i, len;
 		if (!input || input.length === 0) {
@@ -103,7 +101,7 @@ var CSPhotoSelector = (function(module, $) {
 		input = Array.prototype.slice.call(input);
 		photos = input;
 	};
-	
+
 	getPhotos = function() {
 		return photos;
 	};
@@ -121,7 +119,7 @@ var CSPhotoSelector = (function(module, $) {
 		}
 		return null;
 	};
-	
+
 	getPhotoById = function(id) {
 		var i, len;
 		id = id.toString();
@@ -204,14 +202,14 @@ var CSPhotoSelector = (function(module, $) {
 				}
 			}
 		};
-		
+
 		showPhotoSelector = function(callback, albumId) {
 			var i, len;
 			log('CSPhotoSelector - show Photos');
-			
+
 			// show loader until we get a response
 			$loader.show();
-			
+
 			if (!$photos || albumId) {
 				return buildPhotoSelector(function() {
 					showPhotoSelector(callback);
@@ -238,11 +236,11 @@ var CSPhotoSelector = (function(module, $) {
 				}
 			}
 		};
-		
+
 		hidePhotoSelector = function() {
 			$photosWrapper.removeClass('CSPhoto_container_active');
 		};
-		
+
 		hideAlbumSelector = function() {
 			unbindEvents();
 			$container.fadeOut(100);
@@ -251,7 +249,7 @@ var CSPhotoSelector = (function(module, $) {
 		getselectedAlbumIds = function() {
 			return selectedAlbumIds;
 		};
-		
+
 		getselectedPhotoIds = function() {
 			return selectedPhotoIds;
 		};
@@ -303,7 +301,7 @@ var CSPhotoSelector = (function(module, $) {
 				hideAlbumSelector();
 				if (typeof instanceSettings.callbackSubmit === "function") { instanceSettings.callbackSubmit(selectedPhotoIds); }
 			});
-			
+
 			$backToAlbums.bind('click', function(e) {
 				e.preventDefault();
 				$pagination.show();
@@ -360,7 +358,7 @@ var CSPhotoSelector = (function(module, $) {
 				selectAlbum($(this));
 			});
 		};
-		
+
 		// Set the contents of the photos container
 		updatePhotosContainer = function(pageNumber) {
 			var firstIndex, lastIndex;
@@ -435,7 +433,7 @@ var CSPhotoSelector = (function(module, $) {
 				if (typeof instanceSettings.callbackMaxSelection === "function") { instanceSettings.callbackMaxSelection(); }
 			}
 		};
-		
+
 		selectPhotos = function($photo) {
 			var photoId, i, len, removedId;
 			photoId = $photo.attr('data-id');
@@ -481,7 +479,7 @@ var CSPhotoSelector = (function(module, $) {
 			if (selectedPhotoIds.length === instanceSettings.maxSelection) {
 				if (typeof instanceSettings.callbackMaxSelection === "function") { instanceSettings.callbackMaxSelection(); }
 			}
-			
+
 			// log(selectedPhotoIds);
 		};
 
@@ -512,7 +510,7 @@ var CSPhotoSelector = (function(module, $) {
 		}
 		return $("");
 	};
-	
+
 	$getPhotoById = function(id) {
 		var i, len;
 		id = id.toString();
@@ -523,7 +521,7 @@ var CSPhotoSelector = (function(module, $) {
 		}
 		return $("");
 	};
-	
+
 	/**
 	 * Load the Facebook albums and build the markup
 	 */
@@ -581,7 +579,7 @@ var CSPhotoSelector = (function(module, $) {
 					'</a>';
 		};
 	};
-	
+
 	/**
 	 * Load the Facebook photos and build the markup
 	 */
@@ -598,7 +596,7 @@ var CSPhotoSelector = (function(module, $) {
 				buildSecondMarkup();
 				// Call the callback
 				if (typeof callback === 'function') {
-					callback();					
+					callback();
 					// hide the loader and pagination
 					$loader.hide();
 					$pagination.hide();
@@ -610,23 +608,23 @@ var CSPhotoSelector = (function(module, $) {
 				return false;
 			}
 		});
-		
+
 		// Build the markup of the photo selector
 		buildSecondMarkup = function() {
 			//loop through photos
 			var i, len, html = '';
 			// if photos is empty, we need to try again
-			
+
 			if (!photos) {
 				buildPhotoSelector(null, albumId);
 			}
 			for (i = 0, len = photos.length; i < len; i += 1) {
 				html += buildPhotoMarkup(photos[i]);
 			}
-			
+
 			$photos = $(html);
 		};
-		
+
 		buildPhotoMarkup = function(photo) {
 			return '<a href="#" class="CSPhotoSelector_photo CSPhotoSelector_clearfix" data-id="' + photo.id + '">' +
 					'<span><img src="' + photo.picture + '" alt="" class="CSPhotoSelector_photoAvatar" /></span>' +
