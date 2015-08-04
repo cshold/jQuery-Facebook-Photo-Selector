@@ -31,7 +31,6 @@
     <ul>
       <li>Status: <span id="login-status">Not logged in</span> | <a href="#" id="btnLogin">Login</a> | <a href="#" id="btnLogout">Log out</a></li>
       <li><a href="#" class="photoSelect">Select from your photos</a> (You'll need to log in first)</li>
-      <li><a href="#" class="photoSelect" data-id="100002194886179">Select a friend's photo</a> (See below for instructions)</li>
     </ul>
     <div id="results">
       <p>ACTIVITY LOG</p>
@@ -40,15 +39,11 @@
     <h3>Features</h3>
     <ul>
       <li>Browse through albums to find photos</li>
-      <li>Defaults to searching the current user's photos,<br>but can search through friends. See <strong>Search your friend's photos</strong> below.</li>
-      <li>API calls only made when an album is selected.</li>
-      <li>Max 500 photos per album.</li>
+      <li>Search the current user's photos</li>
+      <li>API calls only made when an album is selected</li>
+      <li>Max 500 photos per album</li>
       <li>Facebook-like styling</li>
     </ul>
-
-    <h4>Search your friend's photos</h4>
-    <p>Simply pass a friend's ID to <code>fbphotoSelect()</code> via the <code>data-id</code> attribute on the link. If left blank, the current user's photos are selected.</p>
-    <p>Some users have their photos hidden no matter what permissions you ask for, so you may be faced with a brick wall.</p>
 
 
     <div id="thesedays">
@@ -118,24 +113,29 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script>
-    window.fbAsyncInit = function() {
-      FB.init({ appId: '203534596466008', cookie: true, status: true, xfbml: true, oauth: true });
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '203534596466008',
+          xfbml      : true,
+          version    : 'v2.4'
+        });
 
-      FB.getLoginStatus(function(response) {
-        if (response.authResponse) {
-          $("#login-status").html("Logged in");
-        } else {
-          $("#login-status").html("Not logged in");
-        }
-      });
-    };
-    (function(d){
-      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement('script'); js.id = id; js.async = true;
-      js.src = "//connect.facebook.net/en_US/all.js";
-      ref.parentNode.insertBefore(js, ref);
-    }(document));
+        FB.getLoginStatus(function(response) {
+          if (response.authResponse) {
+            $("#login-status").html("Logged in");
+          } else {
+            $("#login-status").html("Not logged in");
+          }
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
     </script>
     <script src="csphotoselector.js"></script>
     <script src="example.js"></script>

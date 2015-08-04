@@ -4,16 +4,16 @@ $(document).ready(function () {
 	var selector, logActivity, callbackAlbumSelected, callbackPhotoUnselected, callbackSubmit;
 	var buttonOK = $('#CSPhotoSelector_buttonOK');
 	var o = this;
-	
-	
+
+
 	/* --------------------------------------------------------------------
 	 * Photo selector functions
 	 * ----------------------------------------------------------------- */
-	
+
 	fbphotoSelect = function(id) {
 		// if no user/friend id is sent, default to current user
 		if (!id) id = 'me';
-		
+
 		callbackAlbumSelected = function(albumId) {
 			var album, name;
 			album = CSPhotoSelector.getAlbumById(albumId);
@@ -66,12 +66,12 @@ $(document).ready(function () {
 		selector.reset();
 		selector.showAlbumSelector(id);
 	}
-	
-	
+
+
 	/* --------------------------------------------------------------------
 	 * Click events
 	 * ----------------------------------------------------------------- */
-	
+
 	$("#btnLogin").click(function (e) {
 		e.preventDefault();
 		FB.login(function (response) {
@@ -80,20 +80,18 @@ $(document).ready(function () {
 			} else {
 				$("#login-status").html("Not logged in");
 			}
-		}, {scope:'user_photos, friends_photos'});
+		}, {scope:'user_photos'});
 	});
-	
+
 	$("#btnLogout").click(function (e) {
 		e.preventDefault();
 		FB.logout();
 		$("#login-status").html("Not logged in");
 	});
-	
+
 	$(".photoSelect").click(function (e) {
 		e.preventDefault();
-		id = null;
-		if ( $(this).attr('data-id') ) id = $(this).attr('data-id');
-		fbphotoSelect(id);
+		fbphotoSelect();
 	});
 
 	logActivity = function (message) {

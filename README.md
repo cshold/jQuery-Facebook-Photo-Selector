@@ -36,7 +36,7 @@ Just edit `example.js` and set your Facebook `appId`, then set the 'Website' fie
 
 ### The fun stuff (using the plugin)
 
-1 - Make sure your user has authenticated your Facebook app. `user_photos` is required. `friends_photos` is required if you would like to browse a friend's photos. These are set in `example.js`.
+1 - Make sure your user has authenticated your Facebook app. `user_photos` is required. This is set in `example.js`.
 
 2 - Initialise the plugin. Here you can set options like toggling debug messages, your preferred classnames, etc.
 
@@ -56,13 +56,11 @@ Just edit `example.js` and set your Facebook `appId`, then set the 'Website' fie
 		autoDeselection			: true
 	});
 
-4 - Display the plugin instance when you need it. The plugin will automatically load the Facebook photos of the logged in user, or attempt to load the photos of the friend ID passed to the function.
+4 - Display the plugin instance when you need it. The plugin will automatically load the Facebook photos of the logged in user.
 
 	$(".photoSelect").click(function (e) {
 		e.preventDefault();
-		id = null;
-		if ( $(this).attr('data-id') ) id = $(this).attr('data-id');
-		fbphotoSelect(id);
+		fbphotoSelect();
 	});
 
 ### License
