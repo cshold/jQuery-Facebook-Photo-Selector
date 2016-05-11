@@ -278,3 +278,41 @@
 .CSPhoto_container_active {
   left: 11px;
 }
+
+/* responsive support */
+/* optimized for iPhone 5 and upper
+ * will produce a 1-column albums list
+ * and a 2-columns photos list
+ */
+@media screen and (max-width: 480px) {
+  #CSPhotoSelector {
+       padding: 0;
+       margin: 0;
+       position: absolute;
+       align-items: center;
+  }
+  #CSPhotoSelector .CSPhotoSelector_dialog {
+    display: block;
+    align-items: center;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 10%;
+  }
+  #CSPhotoSelector .CSPhotoSelector_dialog .CSPhotoSelector_photosContainer {
+    height: 315px;
+    overflow: scroll;
+  }
+  #CSPhotoSelector .CSPhotoSelector_dialog .CSAlbum_container .CSPhotoSelector_album {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  #CSPhotoSelector .CSPhotoSelector_dialog .CSPhotoSelector_content.CSPhotoSelector_wrapper.CSPhoto_container_active {
+    width: 278px;
+    top: 42px;
+  }
+  #CSPhotoSelector .CSPhotoSelector_dialog .CSPhoto_container .CSPhotoSelector_photo {
+    width: 117px;
+    height: 86px;
+  }
+}
