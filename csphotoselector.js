@@ -8,7 +8,7 @@ var CSPhotoSelector = (function(module, $) {
 	var init, setAlbums, getAlbums, getAlbumById, getPhotoById, setPhotos, newInstance,
 
 	// Private variables
-	settings, albums, prev, photos,
+	settings, albums, prev, photos, photosOfYouCover,
 	$albums, $photos, $container, $albumsContainer, $photosContainer, $selectedCount, $selectedCountMax, $pageNumber, $pageNumberTotal, $pagePrev, $pageNext, $buttonClose, $buttonOK, $buttonCancel,
 
 	// Private functions
@@ -76,16 +76,25 @@ var CSPhotoSelector = (function(module, $) {
 	 * If your website has already loaded the user's Facebook photos, pass them in here to avoid another API call.
 	 */
 	setAlbums = function(input) {
+		log('CSPhotoSelector - Setting album')
+		log(input)
 		var i, len;
 		if (!input || input.length === 0) {
 			return;
 		}
 		input = Array.prototype.slice.call(input);
 		input = input.sort(sortPhotos);
-
-		albums = [];
+		albums = typeof(albums) == 'undefined' ? [] : albums;
+		// TODO: optimize duplicates search performance
 		for (var i=0; i<input.length; i++){
-			albums[albums.length] = input[i];
+			var duplicate = false;
+			for (var j=0; j<albums.length; j++){
+				if (albums[j].id == input[i].id) {
+					duplicate = true;
+				}
+			}
+			if (!duplicate)
+				albums[albums.length] = input[i];
 		}
 	};
 
@@ -527,7 +536,7 @@ var CSPhotoSelector = (function(module, $) {
 	 */
 	buildAlbumSelector = function(id, callback) {
 		var buildMarkup, buildAlbumMarkup;
-		log("buildAlbumSelector");
+		log("CSPhotoSelector - Build album " + id);
 		$pagination.show();
 
 		if (!FB) {
@@ -539,20 +548,54 @@ var CSPhotoSelector = (function(module, $) {
 		FB.getLoginStatus(function(response) {
 			if (response.status === 'connected') {
 				var accessToken = response.authResponse.accessToken;
+				var canBuildMarkup = false;
+				var deferredAlbums = new $.Deferred();
+				var deferredMe = new $.Deferred();
+
 				// Load Facebook photos
 				FB.api('/'+ id +'/albums', function(response) {
 					if (response.data.length) {
+						log('CSPhotoSelector - albums list :')
+						log(response.data)
 						setAlbums(response.data);
-						// Build the markup
-						buildMarkup(accessToken);
-						// Call the callback
-						if (typeof callback === 'function') { callback(); }
+						canBuildMarkup = true;
 					} else {
 						alert ('Sorry, your friend won\'t let us look through their photos');
 						log('CSPhotoSelector - buildAlbumSelector - No albums returned');
 						return false;
 					}
+					deferredAlbums.resolve();
+				})
+
+				// Load Facebook "photos photos of me" (tagged picture of me, not part of any album)
+				if (id == 'me') {
+					FB.api('/me/photos?fields=picture&limit=1', function(response) {
+						if (response.data.length) {
+							log('CSPhotoSelector - Photos of You :')
+							log(response.data)
+							setAlbums([{id: 'me', name: 'Photos of You'}]);
+							photosOfYouCover = response.data[0].picture;
+							canBuildMarkup = true;
+						} else {
+							log('CSPhotoSelector - buildAlbumSelector - No "photos of me" returned');
+							return false;
+						}
+						deferredMe.resolve();
+					});
+				} else {
+					deferredMe.resolve();
+				}
+
+				deferredMe.done(function() {
+					if (canBuildMarkup) {
+						log('CSPhotoSelector - Build albums markup')
+						// Build the markup
+						buildMarkup(accessToken);
+						// Call the callback
+						if (typeof callback === 'function') { callback(); }
+					}
 				});
+
 			} else {
 				log('CSPhotoSelector - buildAlbumSelector - User is not logged in to Facebook');
 				return false;
@@ -566,14 +609,23 @@ var CSPhotoSelector = (function(module, $) {
 			for (i = 0, len = albums.length; i < len; i += 1) {
 				html += buildAlbumMarkup(albums[i], accessToken);
 			}
+			log('CSPhotoSelector - Markup built :')
+			log(html)
 			$albums = $(html);
 		};
 
 		// Return the markup for a single album
 		buildAlbumMarkup = function(album, accessToken) {
+			log('CSPhotoSelector - Building markup for album ' + album.id)
+			if (album.id != 'me') {
+			 	var src = 'https://graph.facebook.com/'+ album.id +'/picture?type=album&access_token='+ accessToken;
+			} else {
+				var src = photosOfYouCover;
+			}
+
 			return '<a href="#" class="CSPhotoSelector_album" data-id="' + album.id + '">' +
 					'<div class="CSPhotoSelector_albumWrap"><div>' +
-					'<img src="https://graph.facebook.com/'+ album.id +'/picture?type=album&access_token='+ accessToken +'" alt="' + htmlEntities(album.name) + '" class="CSPhotoSelector_photoAvatar" />' +
+					'<img src="' + src +'" alt="' + htmlEntities(album.name) + '" class="CSPhotoSelector_photoAvatar" />' +
 					'</div></div>' +
 					'<div class="CSPhotoSelector_photoName">' + htmlEntities(album.name) + '</div>' +
 					'</a>';
