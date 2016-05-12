@@ -284,7 +284,7 @@
  * will produce a 1-column albums list
  * and a 2-columns photos list
  */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 650px) {
   #CSPhotoSelector {
     padding: 0;
     margin: 0;
